@@ -21,7 +21,8 @@ namespace BinarySearchTree
             bst.Insert(99);
 
             //bst.InOrderTraversal();
-            bst.PreOrderTraversal();
+            //bst.PreOrderTraversal();
+            bst.PostOrderTraversal();
 
         }
     }
@@ -109,6 +110,21 @@ namespace BinarySearchTree
                 Right.PreOrderTraversal();
             }
         }
+
+        public void PostOrderTraversal()
+        {
+            if (Left != null)
+            {
+                Left.PostOrderTraversal();
+            }
+
+            if (Right != null)
+            {
+                Right.PostOrderTraversal();
+            }
+
+            Console.WriteLine(Node + " ");
+        }
     }
 
     public class BinaryTree
@@ -139,6 +155,14 @@ namespace BinarySearchTree
             if (root != null)
             {
                 root.PreOrderTraversal();
+            }
+        }
+
+        public void PostOrderTraversal()
+        {
+            if (root != null)
+            {
+                root.PostOrderTraversal();
             }
         }
 
