@@ -22,7 +22,18 @@ namespace BinarySearchTree
 
             //bst.InOrderTraversal();
             //bst.PreOrderTraversal();
-            bst.PostOrderTraversal();
+            //bst.PostOrderTraversal();
+
+            //var node = bst.Find(1);
+            var node = bst.FindRecursive(71);
+            if (node.HasValue)
+            {
+                Console.WriteLine("Node found: " + node.Value);
+            }
+            else
+            {
+                Console.WriteLine("Node NOT found");
+            }
 
         }
     }
@@ -125,6 +136,50 @@ namespace BinarySearchTree
 
             Console.WriteLine(Node + " ");
         }
+        public Nullable<int> Find(int value)
+        {
+            TreeNode currNode = this;
+
+            while (currNode != null)
+            {
+                if (value == currNode.Node)
+                {
+                    return currNode.Node;
+                }
+                else if (value > currNode.Node)
+                {
+                    currNode = currNode.Right;
+                }
+                else if (value < currNode.Node)
+                {
+                    currNode = currNode.Left;
+                }
+            }
+
+            return null;
+        }
+
+        public Nullable<int> FindRecursive(int value)
+        {
+            int currNode = Node;
+
+            if (value == currNode)
+            {
+                return currNode;
+            }
+            else if (value > currNode && Right != null)
+            {
+                return Right.FindRecursive(value);
+            }
+            else if (value < currNode && Left != null)
+            {
+                return Left.FindRecursive(value);
+            }
+            else
+            {
+                return null;
+            }
+        }
     }
 
     public class BinaryTree
@@ -163,6 +218,29 @@ namespace BinarySearchTree
             if (root != null)
             {
                 root.PostOrderTraversal();
+            }
+        }
+
+        public Nullable<int> Find(int value)
+        {
+            if (root != null)
+            {
+                return root.Find(value);
+            }
+            else
+            {
+                return null;
+            }
+        }
+        public Nullable<int> FindRecursive(int value)
+        {
+            if (root != null)
+            {
+                return root.FindRecursive(value);
+            }
+            else
+            {
+                return null;
             }
         }
 
