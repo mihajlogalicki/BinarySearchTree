@@ -22,19 +22,19 @@ namespace BinarySearchTree
 
             //bst.InOrderTraversal();
             //bst.PreOrderTraversal();
-            //bst.PostOrderTraversal();
-
+            
             //var node = bst.Find(1);
-            var node = bst.FindRecursive(71);
-            if (node.HasValue)
-            {
-                Console.WriteLine("Node found: " + node.Value);
-            }
-            else
-            {
-                Console.WriteLine("Node NOT found");
-            }
+            //var node = bst.FindRecursive(71);
+            //if (node.HasValue)
+            //{
+            //    Console.WriteLine("Node found: " + node.Value);
+            //}
+            //else
+            //{
+            //    Console.WriteLine("Node NOT found");
 
+            bst.RemoveNode(7);
+            bst.InOrderTraversal();
         }
     }
 
@@ -180,6 +180,55 @@ namespace BinarySearchTree
                 return null;
             }
         }
+
+        public void Remove(int value)
+        {
+            TreeNode root = this;
+            TreeNode currNode = this;
+            TreeNode Parent = this;
+            bool IsLeftNode = false;
+
+            while(currNode != null && currNode.Node != value)
+            {
+                Parent = currNode;
+
+                if(value < currNode.Node)
+                {
+                    currNode = currNode.Left;
+                    IsLeftNode = true;
+                }
+                else
+                {
+                    currNode = currNode.Right;
+                    IsLeftNode = false;
+                }
+            }
+
+            if(currNode == null)
+            {
+                throw new Exception("Node not exists in the Tree!");
+            }
+
+            // We found a LEAF node (no childrens)
+            if (currNode.Left == null && currNode.Right == null)
+            {
+                if (currNode == root)
+                {
+                    root = null;
+                }
+                else
+                {
+                    if (IsLeftNode)
+                    {
+                        Parent.Left = null;
+                    }
+                    else
+                    {
+                        Parent.Right = null;
+                    }
+                }
+            }
+        }
     }
 
     public class BinaryTree
@@ -244,7 +293,13 @@ namespace BinarySearchTree
             }
         }
 
+        public void RemoveNode(int value)
+        {
+            if (root != null)
+            {
+               root.Remove(value);
+            }
+        } 
     }
 
-}
-
+  }
