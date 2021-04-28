@@ -36,9 +36,8 @@ namespace BinarySearchTree
             //{
             //    Console.WriteLine("Node NOT found");
 
-            bst.RemoveNode(7);
+            bst.Remove(75);
             bst.InOrderTraversal();
-      
         }
     }
 
@@ -185,92 +184,6 @@ namespace BinarySearchTree
             }
         }
 
-        public void Remove(int value)
-        {
-            TreeNode root = this;
-            TreeNode currNode = this;
-            TreeNode Parent = this;
-            bool IsLeftNode = false;
-
-            while(currNode != null && currNode.Node != value)
-            {
-                Parent = currNode;
-
-                if(value < currNode.Node)
-                {
-                    currNode = currNode.Left;
-                    IsLeftNode = true;
-                }
-                else
-                {
-                    currNode = currNode.Right;
-                    IsLeftNode = false;
-                }
-            }
-
-            if(currNode == null)
-            {
-                throw new Exception("Node not exists in the Tree!");
-            }
-
-            // We found a LEAF node (no childrens)
-            if (currNode.Left == null && currNode.Right == null)
-            {
-                if (currNode == root)
-                {
-                    root = null;
-                }
-                else
-                {
-                    if (IsLeftNode)
-                    {
-                        Parent.Left = null;
-                    }
-                    else
-                    {
-                        Parent.Right = null;
-                    }
-                }
-            }
-            // We found node with one Children (left or right)
-            else if (currNode.Left == null)
-            {
-                if(currNode == root)
-                {
-                    root = null;
-                }
-                else
-                {
-                    if (IsLeftNode)
-                    {
-                        Parent.Left = currNode.Right;
-                    }
-                    else
-                    {
-                        Parent.Right = currNode.Right;
-                    }
-                }
-            }
-            else if (currNode.Right == null)
-            {
-                if (currNode == root)
-                {
-                    root = null;
-                }
-                else
-                {
-                    if (IsLeftNode)
-                    {
-                        Parent.Left = currNode.Left;
-                    }
-                    else
-                    {
-                        Parent.Right = currNode.Right;
-                    }
-                }
-            }
-            // we found node with both children
-        }
     }
 
     public class BinaryTree
@@ -335,13 +248,129 @@ namespace BinarySearchTree
             }
         }
 
-        public void RemoveNode(int value)
+        private TreeNode GetSuccessor(TreeNode node)
         {
-            if (root != null)
+            TreeNode parentOfSuccessor = node;
+            TreeNode successor = node;
+            TreeNode current = node.Right;
+
+            while (current != null)
             {
-               root.Remove(value);
+                parentOfSuccessor = successor;
+                successor = current;
+                current = current.Left;
             }
-        } 
+
+            if (successor != node.Right)
+            {
+                parentOfSuccessor.Left = successor.Right;
+                successor.Right = node.Right;
+            }
+            return successor;
+        }
+
+        public void Remove(int value)
+        {
+            TreeNode currNode = root;
+            TreeNode Parent = root;
+            bool IsLeftNode = false;
+
+            while (currNode != null && currNode.Node != value)
+            {
+                Parent = currNode;
+
+                if (value < currNode.Node)
+                {
+                    currNode = currNode.Left;
+                    IsLeftNode = true;
+                }
+                else
+                {
+                    currNode = currNode.Right;
+                    IsLeftNode = false;
+                }
+            }
+
+            if (currNode == null)
+            {
+                throw new Exception("Node not exists in the Tree!");
+            }
+
+            // We found a LEAF node (no childrens)
+            if (currNode.Left == null && currNode.Right == null)
+            {
+                if (currNode == root)
+                {
+                    root = null;
+                }
+                else
+                {
+                    if (IsLeftNode)
+                    {
+                        Parent.Left = null;
+                    }
+                    else
+                    {
+                        Parent.Right = null;
+                    }
+                }
+            }
+            // We found node with one Children (left or right)
+            else if (currNode.Left == null)
+            {
+                if (currNode == root)
+                {
+                    root = null;
+                }
+                else
+                {
+                    if (IsLeftNode)
+                    {
+                        Parent.Left = currNode.Right;
+                    }
+                    else
+                    {
+                        Parent.Right = currNode.Right;
+                    }
+                }
+            }
+            else if (currNode.Right == null)
+            {
+                if (currNode == root)
+                {
+                    root = null;
+                }
+                else
+                {
+                    if (IsLeftNode)
+                    {
+                        Parent.Left = currNode.Left;
+                    }
+                    else
+                    {
+                        Parent.Right = currNode.Right;
+                    }
+                }
+            }
+            // we found node with both children
+            else
+            {
+                TreeNode successor = GetSuccessor(currNode);
+                if (currNode == root)
+                {
+                    root = successor;
+                }
+                else if (IsLeftNode)
+                {
+                    Parent.Left = successor;
+                }
+                else
+                {
+                    Parent.Right = successor;
+                }
+                successor.Left = currNode.Left;
+            }
+        }
     }
 
   }
