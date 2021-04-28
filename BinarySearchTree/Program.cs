@@ -14,7 +14,9 @@ namespace BinarySearchTree
             bst.Insert(90);
             bst.Insert(32);
             bst.Insert(7);
+            bst.Insert(3);
             bst.Insert(44);
+            bst.Insert(45);
             bst.Insert(60);
             bst.Insert(86);
             bst.Insert(93);
@@ -22,7 +24,8 @@ namespace BinarySearchTree
 
             //bst.InOrderTraversal();
             //bst.PreOrderTraversal();
-            
+            //bst.PreOrderTraversal();
+
             //var node = bst.Find(1);
             //var node = bst.FindRecursive(71);
             //if (node.HasValue)
@@ -35,6 +38,7 @@ namespace BinarySearchTree
 
             bst.RemoveNode(7);
             bst.InOrderTraversal();
+      
         }
     }
 
@@ -228,6 +232,44 @@ namespace BinarySearchTree
                     }
                 }
             }
+            // We found node with one Children (left or right)
+            else if (currNode.Left == null)
+            {
+                if(currNode == root)
+                {
+                    root = null;
+                }
+                else
+                {
+                    if (IsLeftNode)
+                    {
+                        Parent.Left = currNode.Right;
+                    }
+                    else
+                    {
+                        Parent.Right = currNode.Right;
+                    }
+                }
+            }
+            else if (currNode.Right == null)
+            {
+                if (currNode == root)
+                {
+                    root = null;
+                }
+                else
+                {
+                    if (IsLeftNode)
+                    {
+                        Parent.Left = currNode.Left;
+                    }
+                    else
+                    {
+                        Parent.Right = currNode.Right;
+                    }
+                }
+            }
+            // we found node with both children
         }
     }
 
