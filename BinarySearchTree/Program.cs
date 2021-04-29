@@ -14,8 +14,6 @@ namespace BinarySearchTree
             bst.Insert(90);
             bst.Insert(32);
             bst.Insert(7);
-            bst.Insert(1);
-            bst.Insert(3);
             bst.Insert(44);
             bst.Insert(45);
             bst.Insert(60);
@@ -40,7 +38,8 @@ namespace BinarySearchTree
             //bst.Remove(90);
             //bst.InOrderTraversal();
             //bst.Smallest();
-            Console.WriteLine(bst.Smallest());
+            //Console.WriteLine(bst.Smallest());
+            Console.WriteLine(bst.NumberOfLeafNodes());
         }
     }
 
@@ -207,6 +206,30 @@ namespace BinarySearchTree
             {
                 return Node;
             }
+        }
+
+        public int NumberOfLeafNodes()
+        {
+            TreeNode node = this;
+
+            if(Left == null && Right == null)
+            {
+                return 1;
+            }
+
+            int leftLeaves = 0;
+            int rightLeaves = 0;
+
+            if (Left != null)
+            {
+                leftLeaves = Left.NumberOfLeafNodes();
+            }
+            if (Right != null)
+            {
+                rightLeaves = Right.NumberOfLeafNodes();
+            }
+
+            return leftLeaves + rightLeaves;
         }
     }
 
@@ -412,6 +435,17 @@ namespace BinarySearchTree
                 return root.Larger();
             }
             return null;
+        }
+
+        public int NumberOfLeafNodes()
+        {
+            if(root != null)
+            {
+                return root.NumberOfLeafNodes();
+            } else
+            {
+                return 0;
+            }
         }
     }
 
