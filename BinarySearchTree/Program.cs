@@ -14,6 +14,7 @@ namespace BinarySearchTree
             bst.Insert(90);
             bst.Insert(32);
             bst.Insert(7);
+            bst.Insert(1);
             bst.Insert(3);
             bst.Insert(44);
             bst.Insert(45);
@@ -36,8 +37,10 @@ namespace BinarySearchTree
             //{
             //    Console.WriteLine("Node NOT found");
 
-            bst.Remove(75);
-            bst.InOrderTraversal();
+            //bst.Remove(90);
+            //bst.InOrderTraversal();
+            //bst.Smallest();
+            Console.WriteLine(bst.Smallest());
         }
     }
 
@@ -184,6 +187,27 @@ namespace BinarySearchTree
             }
         }
 
+        public int Smallest()
+        {
+           if(Left != null)
+            {
+               return Left.Smallest();
+            }
+            else
+            {
+                return Node;
+            }
+        }
+        public int Larger()
+        {
+            if(Right != null)
+            {
+                return Right.Larger();
+            }else
+            {
+                return Node;
+            }
+        }
     }
 
     public class BinaryTree
@@ -266,6 +290,7 @@ namespace BinarySearchTree
                 parentOfSuccessor.Left = successor.Right;
                 successor.Right = node.Right;
             }
+            successor.Left = node.Left;
             return successor;
         }
 
@@ -368,8 +393,25 @@ namespace BinarySearchTree
                 {
                     Parent.Right = successor;
                 }
-                successor.Left = currNode.Left;
             }
+        }
+
+        public Nullable<int> Smallest()
+        {
+            if(root != null)
+            {
+               return root.Smallest();
+            }
+            return null;
+        }
+
+        public Nullable<int> Larger()
+        {
+            if (root != null)
+            {
+                return root.Larger();
+            }
+            return null;
         }
     }
 
